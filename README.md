@@ -33,19 +33,32 @@
 
 ---
 
-## 🚀 インストール
+## 🚀 インストール（はじめての方へ）
 
-### Claude Code（推奨）
+> **どれを選べばいい？**
+> - 普段 **Claude Code（ターミナルのAIツール）** を使っている → **方法A**
+> - **Claude.ai（ブラウザのClaude）** しか使っていない・ターミナルが苦手 → **方法B**（コマンド不要）
+>
+> どちらも **API キーの設定は不要**です（このリポジトリのAnthropic APIキーは、メンテナが月次でナレッジ更新するためだけのもの。利用者には関係ありません）。
 
-#### ユーザーグローバル
+---
+
+### 方法A: Claude Code で使う（推奨）
+
+**前提**: Claude Code がインストール済みであること。`git` も必要です（Mac/Linux は標準で入っていることが多い。無ければ後述の方法Bでも可）。
+
+#### A-1. git clone する場合
+
+ターミナルを開いて、以下を**そのままコピペ**して実行します。
 
 ```bash
+# 自分のすべての作業で使えるようにする（おすすめ）
 mkdir -p ~/.claude/skills
 cd ~/.claude/skills
 git clone https://github.com/mangosteenseeds/yakkihou-review.git
 ```
 
-#### プロジェクトローカル
+特定のプロジェクトでだけ使いたい場合は、そのプロジェクトのフォルダ内で:
 
 ```bash
 mkdir -p .claude/skills
@@ -53,22 +66,54 @@ cd .claude/skills
 git clone https://github.com/mangosteenseeds/yakkihou-review.git
 ```
 
-`.claude/skills/yakkihou-review/SKILL.md` が認識されれば自動でロードされます。Claude Code を再起動してください。
+#### A-2. git を使わない場合（ZIPダウンロード）
 
-### Claude.ai Project
+1. このページ右上の緑の **「Code」ボタン → 「Download ZIP」** をクリック
+2. ダウンロードした ZIP を解凍
+3. 出てきた `yakkihou-review` フォルダを `~/.claude/skills/` の中に移動
+   （`~` はホームフォルダ。Mac なら Finder で `Cmd+Shift+G` →  `~/.claude/skills` で開けます。フォルダが無ければ作成）
 
-1. Claude.ai で新規プロジェクトを作成
-2. プロジェクトナレッジに以下のファイルをアップロード:
+#### 動作確認
+
+1. **Claude Code を再起動**します（一度終了して開き直す）
+2. 次のように話しかけます:
+   ```
+   この化粧品LPを薬機法チェックして
+   「シミが消える美容液。3日で若返る、業界No.1」
+   ```
+3. 「薬機法・景表法レビュー結果」という見出しで結果が返ってくれば成功です。
+
+---
+
+### 方法B: Claude.ai（ブラウザ）で使う ※コマンド不要
+
+Claude Code を使っていない人向け。ターミナル操作は一切ありません。
+
+1. このページ右上 **「Code」→「Download ZIP」** で一式をダウンロード・解凍
+2. [Claude.ai](https://claude.ai) で **新規プロジェクト**を作成
+3. プロジェクトのナレッジ（Project knowledge）に、解凍したフォルダから以下の **5ファイルをアップロード**:
    - `SKILL.md`
    - `references/efficacy-56.md`
    - `references/ng-expressions.md`
    - `references/keihyouhou.md`
    - `references/before-after-testimonials.md`
-3. システムプロンプトに「薬機法レビューが必要な原稿が来たら、SKILL.md の手順に従ってレビューする」と明示
+4. プロジェクトの指示（カスタムインストラクション）に次を貼り付け:
+   > 化粧品・美容の広告原稿が来たら、アップロード済みの SKILL.md の手順に従って薬機法・景表法レビューを行うこと。
+5. あとはチャットに原稿を貼ればレビューが返ります。
 
-### 自分でリポジトリを公開する場合
+---
 
-Claude Code に `CLAUDE_CODE_PROMPT.md` の内容を投げれば、`bootstrap.sh` が対話的に GitHub リポジトリ作成・Secrets 登録・Actions 設定まで自動で完遂します。詳細は [`SETUP.md`](./SETUP.md) を参照してください。
+### うまくいかないとき
+
+- **Claude Code で自動起動しない** → 再起動したか確認。`~/.claude/skills/yakkihou-review/SKILL.md` が存在するか確認。明示的に「yakkihou-review skill を使って薬機法チェックして」と指示しても動きます
+- **`git: command not found`** → git 未インストール。方法A-2（ZIP）か方法Bを使ってください
+- **フォルダが見つからない** → `~/.claude/` は隠しフォルダです。Mac Finder は `Cmd+Shift+.` で隠しフォルダを表示できます
+
+---
+
+### （上級者向け）自分のリポジトリとして公開・運用する
+
+このSkillを fork して、法令ナレッジを**月次で自動更新**する仕組みごと運用したい場合は、[`SETUP.md`](./SETUP.md) を参照してください。Claude Code に [`CLAUDE_CODE_PROMPT.md`](./CLAUDE_CODE_PROMPT.md) の内容を投げれば、`bootstrap.sh` が GitHub リポジトリ作成・Secrets 登録・Actions 設定まで対話的に完遂します。
 
 ---
 

@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editor
+.vscode/
+.idea/
+*.sublime-*
+
+# Local override (組織固有設定をローカルに置く場合)
+references/local-*.md
+examples/local-*.md
+.local/
+
+# Logs (もしレビュー結果ログ機能を実装した場合)
+logs/
+*.log
+
+# Node (もしCLI tooling を追加する場合)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Python (もしバルクスキャンスクリプトを追加する場合)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+dist/
+build/
+*.zip
+*.tar.gz

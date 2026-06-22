@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install validation deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml markdown
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          python scripts/validate_skill.py
+
+      - name: Validate references structure
+        run: |
+          python scripts/validate_references.py
+
+      - name: Check for forbidden content
+        run: |
+          # 実在の企業名・商品名が誤ってコミットされていないか軽くチェック
+          # （措置命令事例の case-studies.md は公開情報なので除外）
+          ! grep -rE "(ラシンシア|メタファー)" --include="*.md" . \
+            --exclude-dir=node_modules --exclude="case-studies.md" \
+            || (echo "::error::Internal/private organization name found in public-facing files" && exit 1)
+
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .github/workflows/
+          config_data: |
+            extends: default
+            rules:
+              line-length:
+                max: 200
+              document-start: disable
+              truthy:
+                check-keys: false

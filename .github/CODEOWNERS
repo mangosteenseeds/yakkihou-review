@@ -1,0 +1,10 @@
+# Code owners for yakkihou-review
+#
+# 法令・コンプライアンス系ナレッジを扱うため、全変更にメンテナのレビューを必須とする。
+# 特に月次自動更新 PR (auto-update / needs-human-review) は人間の承認なしにマージしない。
+
+* @mangosteenseeds
+
+# 法令ナレッジ本体は特に慎重にレビューする
+/references/ @mangosteenseeds
+/SKILL.md    @mangosteenseeds

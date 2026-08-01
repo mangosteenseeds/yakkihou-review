@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+### Added (2026-08-01 - automated)
+- 1 new NG expression(s) appended to `references/ng-expressions.md`
+- 1 case study/studies appended to `references/case-studies.md`
+- 1 pending regulation update(s) in `references/REGULATION-UPDATES-PENDING.md`
+
+
 ## [1.1.0] - 2026-06-22
 
 ### Added

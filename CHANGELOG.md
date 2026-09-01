@@ -7,6 +7,10 @@
 
 ## [Unreleased]
 
+### Added (2026-09-01 - automated)
+- 1 pending regulation update(s) in `references/REGULATION-UPDATES-PENDING.md`
+
+
 ## [1.1.0] - 2026-06-22
 
 ### Added
